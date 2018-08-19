@@ -1,0 +1,21 @@
+{
+    "provisioners" : [{
+        "type" : "shell",
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "inline" : [
+            "apt update",
+            "apt install -y python-pip",
+            "pip install ansible",
+            "pip install git+https://github.com/larsks/ansible-toolbox"
+        ]
+        }],
+    "builders" : [{
+        "type" : "amazon-ebs",
+        "region" : "ap-southeast-1",
+        "source_ami" : "ami-51a7aa2d",
+        "instance_type" : "t2.micro",
+        "ssh_username" : "ubuntu",
+        "ami_name" : "ubuntu-16.04-pip-ansible",
+        "security_group_ids" : ["sg-2971d74f"]
+    }]
+}

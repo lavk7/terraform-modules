@@ -2,11 +2,10 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-module "cassandra" {
-  source = "cassandra"
+module "kafka" {
+  source = "kafka/tf"
   platform = "ubuntu-14.04"
-  version  = "3.7.0"
-  use_keypair = "true"
-  key_name = "general-keypair" 
+  version  = "v0.10.0.1"
+  keypair = "general-keypair" 
   count = "1"
 }

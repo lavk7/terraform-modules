@@ -12,5 +12,5 @@ resource "aws_instance" "cassandra_with_keypair" {
 }
 
 module "ssh_security_group" {
-  source = "../common/securitygroup"
+  source = "../common/securitygroup/ssh"
 }

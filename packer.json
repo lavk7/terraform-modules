@@ -1,0 +1,26 @@
+{
+    
+    "provisioners" : [{
+        "type" : "shell",
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "inline" : [
+            "apt update",
+            "apt install -y python-pip",
+            "pip install ansible",
+            "ansible-galaxy install sansible.kafka",
+            "ansible-galaxy install sansible.zookeeper",
+            "pip install git+https://github.com/larsks/ansible-toolbox",
+            "ansible-role --host localhost --user ubuntu --become sansible.zookeeper",
+            "ansible-role --host localhost --user ubuntu --become sansible.kafka"
+        ]
+        }],
+    "builders" : [{
+        "type" : "amazon-ebs",
+        "region" : "ap-southeast-1",
+        "source_ami" : "ami-51a7aa2d",
+        "instance_type" : "t2.micro",
+        "ssh_username" : "ubuntu",
+        "ami_name" : "kafka-v1",
+        "security_group_ids" : ["sg-2971d74f"]
+    }]
+}

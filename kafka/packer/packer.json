@@ -1,0 +1,20 @@
+{
+    "provisioners" : [{
+        "type" : "shell",
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "inline" : [
+            "ansible-galaxy install wtanaka.apache-kafka",
+            "pip install git+https://github.com/larsks/ansible-toolbox",
+            "ansible-role --host localhost --user ubuntu --become wtanaka.apache-kafka"
+        ]
+        }],
+    "builders" : [{
+        "type" : "amazon-ebs",
+        "region" : "ap-southeast-1",
+        "source_ami" : "ami-0c872a7a41839d1cb",
+        "instance_type" : "t2.micro",
+        "ssh_username" : "ubuntu",
+        "ami_name" : "kafka-{{timestamp}}",
+        "security_group_ids" : ["sg-2971d74f"]
+    }]
+}
